@@ -1,0 +1,6 @@
+if(true)
+{
+	cout<<true;
+}
+else 
+	cin>>false;
