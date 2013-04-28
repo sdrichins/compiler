@@ -177,6 +177,10 @@ string getlocation(string x)
     symbol y = stable.getsym(x, "g");
     if(y.scope == "g")
         return y.symid;
+    else if(y.off == 0)
+    {
+        return y.symid;
+    }
     else
     {
         return inttostring(y.off);
@@ -3199,17 +3203,17 @@ string tcodegen()
                 tmp.push_back("FP");
                 tcode.push_back(tmp);
                 reg[r2].push_back("FP");
-                vector<string> tmp5;
-                tmp5.push_back("ADI");
-                tmp5.push_back(r2);
-                tmp5.push_back("-"+loc1);
-                tcode.push_back(tmp5);
+                vector<string> tmp2;
+                tmp2.push_back("ADI");
+                tmp2.push_back(r2);
+                tmp2.push_back("-"+loc1);
+                tcode.push_back(tmp2);
                 r1 = getregister();
-                vector<string> tmp6;
-                tmp6.push_back("LDR");
-                tmp6.push_back(r1);
-                tmp6.push_back(r2);
-                tcode.push_back(tmp6);
+                vector<string> tmp3;
+                tmp3.push_back("LDR");
+                tmp3.push_back(r1);
+                tmp3.push_back(r2);
+                tcode.push_back(tmp3);
                 reg[r2].clear();
             }
             else
@@ -3224,57 +3228,57 @@ string tcodegen()
             if(isdigit(loc2[0]))
             {
                 r3 = getregister();
-                vector<string> tmp9;
-                tmp9.push_back("MOV");
-                tmp9.push_back(r3);
-                tmp9.push_back("FP");
-                tcode.push_back(tmp9);
+                vector<string> tmp4;
+                tmp4.push_back("MOV");
+                tmp4.push_back(r3);
+                tmp4.push_back("FP");
+                tcode.push_back(tmp4);
                 reg[r3].push_back("FP");
-                vector<string> tmp10;
-                tmp10.push_back("ADI");
-                tmp10.push_back(r3);
-                tmp10.push_back("-"+loc2);
-                tcode.push_back(tmp10);
+                vector<string> tmp5;
+                tmp5.push_back("ADI");
+                tmp5.push_back(r3);
+                tmp5.push_back("-"+loc2);
+                tcode.push_back(tmp5);
                 r2 = getregister();
-                vector<string> tmp11;
-                tmp11.push_back("LDR");
-                tmp11.push_back(r2);
-                tmp11.push_back(r3);
-                tcode.push_back(tmp11);
+                vector<string> tmp6;
+                tmp6.push_back("LDR");
+                tmp6.push_back(r2);
+                tmp6.push_back(r3);
+                tcode.push_back(tmp6);
                 reg[r3].clear();
             }
             else
             {
-                vector<string> tmp2;
+                vector<string> tmp4;
                 r2 = getregister();
-                tmp2.push_back("LDR");
-                tmp2.push_back(r2);
-                tmp2.push_back(quad[i][3]);
-                tcode.push_back(tmp2);
+                tmp4.push_back("LDR");
+                tmp4.push_back(r2);
+                tmp4.push_back(quad[i][3]);
+                tcode.push_back(tmp4);
             }
             reg[r2].push_back(quad[i][3]);
-            vector<string> tmp3;
-			tmp3.push_back(quad[i][1]);
-			tmp3.push_back(getlocation(quad[i][2]));
-			tmp3.push_back(getlocation(quad[i][3]));
-			tcode.push_back(tmp3);
-            r3 = getregister();
             vector<string> tmp7;
-            tmp7.push_back("MOV");
-            tmp7.push_back(r3);
-            tmp7.push_back("FP");
-            tcode.push_back(tmp7);
-            reg[r3].push_back("FP");
+	    tmp7.push_back(quad[i][1]);
+	    tmp7.push_back(getlocation(quad[i][2]));
+	    tmp7.push_back(getlocation(quad[i][3]));
+	    tcode.push_back(tmp7);
+            r3 = getregister();
             vector<string> tmp8;
-            tmp8.push_back("ADI");
+            tmp8.push_back("MOV");
             tmp8.push_back(r3);
-            tmp8.push_back("-"+loc3);
+            tmp8.push_back("FP");
             tcode.push_back(tmp8);
-			vector<string> tmp4;
-			tmp4.push_back("STR");
-			tmp4.push_back(getlocation(quad[i][2]));
-			tmp4.push_back(r3);
-			tcode.push_back(tmp4);
+            reg[r3].push_back("FP");
+            vector<string> tmp9;
+            tmp9.push_back("ADI");
+            tmp9.push_back(r3);
+            tmp9.push_back("-"+loc3);
+            tcode.push_back(tmp9);
+			vector<string> tmp10;
+			tmp10.push_back("STR");
+			tmp10.push_back(getlocation(quad[i][2]));
+			tmp10.push_back(r3);
+			tcode.push_back(tmp10);
 			reg[r1].clear();
 			reg[r2].clear();
             reg[r3].clear();
@@ -3291,17 +3295,17 @@ string tcodegen()
                 tmp.push_back("FP");
                 tcode.push_back(tmp);
                 reg[r2].push_back("FP");
-                vector<string> tmp4;
-                tmp4.push_back("ADI");
-                tmp4.push_back(r2);
-                tmp4.push_back(loc1);
-                tcode.push_back(tmp4);
+                vector<string> tmp2;
+                tmp2.push_back("ADI");
+                tmp2.push_back(r2);
+                tmp2.push_back("-"+loc1);
+                tcode.push_back(tmp2);
                 r1 = getregister();
-                vector<string> tmp5;
-                tmp5.push_back("LDR");
-                tmp5.push_back(r1);
-                tmp5.push_back(r2);
-                tcode.push_back(tmp5);
+                vector<string> tmp3;
+                tmp3.push_back("LDR");
+                tmp3.push_back(r1);
+                tmp3.push_back(r2);
+                tcode.push_back(tmp3);
                 reg[r2].clear();
                 
             }
@@ -3314,244 +3318,365 @@ string tcodegen()
                 tcode.push_back(tmp);
             }
             reg[r1].push_back(quad[i][2]);
-            vector<string> tmp2;
-            tmp2.push_back("ADI");
-			tmp2.push_back(r1);
-            tmp2.push_back(quad[i][3]);
-            tcode.push_back(tmp2);
-            vector<string> tmp3;
-			tmp3.push_back("STR");
-			tmp3.push_back(r1);
-			tmp3.push_back(quad[i][4]);
-			tcode.push_back(tmp3);
+            vector<string> tmp4;
+            tmp4.push_back("ADI");
+            tmp4.push_back(r1);
+            tmp4.push_back(quad[i][3]);
+            tcode.push_back(tmp4);
+            if(isdigit(loc2[0]))
+            {
+                r3 = getregister();
+                vector<string> tmp5;
+                tmp5.push_back("MOV");
+                tmp5.push_back(r3);
+                tmp5.push_back("FP");
+                tcode.push_back(tmp5);
+                vector<string> tmp6;
+                tmp6.push_back("ADI");
+                tmp6.push_back(r3);
+                tmp6.push_back("-"+loc2);
+                tcode.push_back(tmp6);
+                vector<string> tmp7;
+                tmp7.push_back("STR");
+                tmp7.push_back(r1);
+                tmp7.push_back(r3);
+                reg[r3].clear();
+                
+            }
+            else
+            {
+                vector<string> tmp5;
+                tmp5.push_back("STR");
+                tmp5.push_back(r1);
+                tmp5.push_back(loc2);
+                tcode.push_back(tmp5);
+            }
 			reg[r1].clear();
 		}
-/*		else if(quad[i][1] == "SUB")
-		{
-			r1 = getregister();
-            tmp.push_back("LDR");
-            tmp.push_back(r1);
-            tmp.push_back(quad[i][2]);
-            tcode.push_back(tmp);
+	else if(quad[i][1] == "EQ" || quad[i][1] == "LT" || quad[i][1] == "GT" || quad[i][1] == "NE")
+	{
+            string loc1 = getlocation(quad[i][2]);
+            string loc2 = getlocation(quad[i][3]);
+            string loc3 = getlocation(quad[i][4]);
+            if(isdigit(loc1[0]))
+            {
+                r2 = getregister();
+                tmp.push_back("MOV");
+                tmp.push_back(r2);
+                tmp.push_back("FP");
+                tcode.push_back(tmp);
+                reg[r2].push_back("FP");
+                vector<string> tmp2;
+                tmp2.push_back("ADI");
+                tmp2.push_back(r2);
+                tmp2.push_back("-"+loc1);
+                tcode.push_back(tmp2);
+                r1 = getregister();
+                vector<string> tmp3;
+                tmp3.push_back("LDR");
+                tmp3.push_back(r1);
+                tmp3.push_back(r2);
+                tcode.push_back(tmp3);
+                reg[r2].clear();
+            }
+            else
+            {
+                r1 = getregister();
+                tmp.push_back("LDR");
+                tmp.push_back(r1);
+                tmp.push_back(loc1);
+                tcode.push_back(tmp);
+            }
             reg[r1].push_back(quad[i][2]);
-            vector<string> tmp2;
-            r2 = getregister();
-            tmp2.push_back("LDR");
-            tmp2.push_back(r2);
-            tmp2.push_back(quad[i][3]);
-            tcode.push_back(tmp2);
+            if(isdigit(loc2[0]))
+            {
+                r3 = getregister();
+                vector<string> tmp4;
+                tmp4.push_back("MOV");
+                tmp4.push_back(r3);
+                tmp4.push_back("FP");
+                tcode.push_back(tmp4);
+                reg[r3].push_back("FP");
+                vector<string> tmp5;
+                tmp5.push_back("ADI");
+                tmp5.push_back(r3);
+                tmp5.push_back("-"+loc2);
+                tcode.push_back(tmp5);
+                r2 = getregister();
+                vector<string> tmp6;
+                tmp6.push_back("LDR");
+                tmp6.push_back(r2);
+                tmp6.push_back(r3);
+                tcode.push_back(tmp6);
+                reg[r3].clear();
+            }
+            else
+            {
+                vector<string> tmp4;
+                r2 = getregister();
+                tmp4.push_back("LDR");
+                tmp4.push_back(r2);
+                tmp4.push_back(quad[i][3]);
+                tcode.push_back(tmp4);
+            }
             reg[r2].push_back(quad[i][3]);
-            vector<string> tmp3;
-			tmp3.push_back("SUB");
-			tmp3.push_back(r1);
-			tmp3.push_back(r2);
-			tcode.push_back(tmp3);
-			vector<string> tmp4;
-			tmp4.push_back("STR");
-			tmp4.push_back(r1);
-			tmp4.push_back(quad[i][4]);
-			tcode.push_back(tmp4);
-			reg[r1].clear();
-			reg[r2].clear();
-		}
-		else if(quad[i][1] == "MUL")
-		{
-			r1 = getregister();
-            tmp.push_back("LDR");
-            tmp.push_back(r1);
-            tmp.push_back(quad[i][2]);
-            tcode.push_back(tmp);
-            reg[r1].push_back(quad[i][2]);
-            vector<string> tmp2;
-            r2 = getregister();
-            tmp2.push_back("LDR");
-            tmp2.push_back(r2);
-            tmp2.push_back(quad[i][3]);
-            tcode.push_back(tmp2);
-            reg[r2].push_back(quad[i][3]);
-            vector<string> tmp3;
-			tmp3.push_back("MUL");
-			tmp3.push_back(r1);
-			tmp3.push_back(r2);
-			tcode.push_back(tmp3);
-			vector<string> tmp4;
-			tmp4.push_back("STR");
-			tmp4.push_back(r1);
-			tmp4.push_back(quad[i][4]);
-			tcode.push_back(tmp4);
-			reg[r1].clear();
-			reg[r2].clear();
-		}
-		else if(quad[i][1] == "DIV")
-		{
-			r1 = getregister();
-            tmp.push_back("LDR");
-            tmp.push_back(r1);
-            tmp.push_back(quad[i][2]);
-            tcode.push_back(tmp);
-            reg[r1].push_back(quad[i][2]);
-            vector<string> tmp2;
-            r2 = getregister();
-            tmp2.push_back("LDR");
-            tmp2.push_back(r2);
-            tmp2.push_back(quad[i][3]);
-            tcode.push_back(tmp2);
-            reg[r2].push_back(quad[i][3]);
-            vector<string> tmp3;
-			tmp3.push_back("DIV");
-			tmp3.push_back(r1);
-			tmp3.push_back(r2);
-			tcode.push_back(tmp3);
-			vector<string> tmp4;
-			tmp4.push_back("STR");
-			tmp4.push_back(r1);
-			tmp4.push_back(quad[i][4]);
-			tcode.push_back(tmp4);
-			reg[r1].clear();
-			reg[r2].clear();
-		}
-        else if(quad[i][1] == "MOD")
-		{
-			r1 = getregister();
-            tmp.push_back("LDR");
-            tmp.push_back(r1);
-            tmp.push_back(quad[i][2]);
-            tcode.push_back(tmp);
-            reg[r1].push_back(quad[i][2]);
-            vector<string> tmp2;
-            r2 = getregister();
-            tmp2.push_back("LDR");
-            tmp2.push_back(r2);
-            tmp2.push_back(quad[i][3]);
-            tcode.push_back(tmp2);
-            reg[r2].push_back(quad[i][3]);
-            vector<string> tmp3;
-			tmp3.push_back("MOD");
-			tmp3.push_back(r1);
-			tmp3.push_back(r2);
-			tcode.push_back(tmp3);
-			vector<string> tmp4;
-			tmp4.push_back("STR");
-			tmp4.push_back(r1);
-			tmp4.push_back(quad[i][4]);
-			tcode.push_back(tmp4);
-			reg[r1].clear();
-			reg[r2].clear();
-		}
-*/		else if(quad[i][1] == "EQ")
-		{
-			r1 = getregister();
-            tmp.push_back("LDR");
-            tmp.push_back(r1);
-            tmp.push_back(quad[i][2]);
-            tcode.push_back(tmp);
-            reg[r1].push_back(quad[i][2]);
-            vector<string> tmp2;
-            r2 = getregister();
-            tmp2.push_back("LDR");
-            tmp2.push_back(r2);
-            tmp2.push_back(quad[i][3]);
-            tcode.push_back(tmp2);
-            reg[r2].push_back(quad[i][3]);
-            vector<string> tmp3;
-			tmp3.push_back("CMP");
-			tmp3.push_back(r1);
-			tmp3.push_back(r2);
-			tcode.push_back(tmp3);
-			vector<string> tmp4;
-			tmp4.push_back("BRZ");
-			tmp4.push_back(r1);
-			string lbl1 = "l"+lblgen();
-			string lbl2 = "l"+lblgen();
-			tmp4.push_back(lbl1);
-			tcode.push_back(tmp4);
-			vector<string> tmp5;
-			tmp5.push_back("LDR");
-            tmp5.push_back(r1);
-            tmp5.push_back("zero");
-            tcode.push_back(tmp5);
-			vector<string> tmp9;
-			tmp9.push_back("STR");
-			tmp9.push_back(r1);
-			tmp9.push_back(quad[i][4]);
-			tcode.push_back(tmp9);
+            vector<string> tmp7;
+            tmp7.push_back("CMP");
+            tmp7.push_back(r1);
+            tmp7.push_back(r2);
+            tcode.push_back(tmp7);
+            vector<string> tmp8;
+            if(quad[i][1] == "EQ")
+                tmp8.push_back("BRZ");
+            if(quad[i][1] == "LT")
+                tmp8.push_back("BLT");
+            if(quad[i][1] == "GT")
+                tmp8.push_back("BGT");
+            if(quad[i][1] == "NE")
+                tmp8.push_back("BNZ");
+            tmp8.push_back(r1);
+            string lbl1 = "l"+lblgen();
+            string lbl2 = "l"+lblgen();
+            tmp8.push_back(lbl1);
+            tcode.push_back(tmp8);
+            vector<string> tmp9;
+            tmp9.push_back("LDR");
+            tmp9.push_back(r1);
+            tmp9.push_back("zero");
+            tcode.push_back(tmp9);
+            if(isdigit(loc3[0]))
+            {
+                r3 = getregister();
+                vector<string> tmp10;
+                tmp10.push_back("MOV");
+                tmp10.push_back(r3);
+                tmp10.push_back("FP");
+                tcode.push_back(tmp10);
+                reg[r3].push_back("FP");
+                vector<string> tmp11;
+                tmp11.push_back("ADI");
+                tmp11.push_back(r3);
+                tmp11.push_back("-"+loc3);
+                tcode.push_back(tmp11);
+                vector<string> tmp12;
+                tmp12.push_back("STR");
+                tmp12.push_back(r1);
+                tmp12.push_back(r3);
+                tcode.push_back(tmp12);
+                reg[r3].clear();
+            }
+            else
+            {
+                vector<string> tmp10;
+                tmp10.push_back("STR");
+                tmp10.push_back(r1);
+                tmp10.push_back(loc3);
+                tcode.push_back(tmp10);
+            }
 			reg[r1].push_back(quad[i][4]);
-			vector<string> tmp6;
-			tmp6.push_back("JMP");
-			tmp6.push_back(lbl2);
-			tcode.push_back(tmp6);
-			vector<string> tmp7;
-			tmp7.push_back(lbl1);
-			tmp7.push_back("LDR");
-			tmp7.push_back(r1);
-			tmp7.push_back("one");
-			tcode.push_back(tmp7);
-			vector<string> tmp8;
-			tmp8.push_back("STR");
-			tmp8.push_back(r1);
-			tmp8.push_back(quad[i][4]);
-			tcode.push_back(tmp8);
-			vector<string> tmp10;
-			tmp10.push_back(lbl2);
-			tcode.push_back(tmp10);
+			vector<string> tmp13;
+			tmp13.push_back("JMP");
+			tmp13.push_back(lbl2);
+			tcode.push_back(tmp13);
+			vector<string> tmp14;
+			tmp14.push_back(lbl1);
+			tmp14.push_back("LDR");
+			tmp14.push_back(r1);
+			tmp14.push_back("one");
+			tcode.push_back(tmp14);
+            if(isdigit(loc3[0]))
+            {
+                r3 = getregister();
+                vector<string> tmp15;
+                tmp15.push_back("MOV");
+                tmp15.push_back(r3);
+                tmp15.push_back("FP");
+                tcode.push_back(tmp15);
+                reg[r3].push_back("FP");
+                vector<string> tmp16;
+                tmp16.push_back("ADI");
+                tmp16.push_back(r3);
+                tmp16.push_back("-"+loc3);
+                tcode.push_back(tmp16);
+                vector<string> tmp17;
+                tmp17.push_back("STR");
+                tmp17.push_back(r1);
+                tmp17.push_back(r3);
+                tcode.push_back(tmp17);
+                reg[r3].clear();
+            }
+            else
+            {
+                vector<string> tmp15;
+                tmp15.push_back("STR");
+                tmp15.push_back(r1);
+                tmp15.push_back(loc3);
+                tcode.push_back(tmp15);
+            }
+			reg[r1].push_back(quad[i][4]);
+			vector<string> tmp18;
+			tmp18.push_back(lbl2);
+			tcode.push_back(tmp18);
 //			reg[stringtoint(r1)].clear();
 			reg[r2].clear();
 		}
         else if(quad[i][1] == "LT")
 		{
-			r1 = getregister();
-            tmp.push_back("LDR");
-            tmp.push_back(r1);
-            tmp.push_back(quad[i][2]);
-            tcode.push_back(tmp);
+			string loc1 = getlocation(quad[i][2]);
+            string loc2 = getlocation(quad[i][3]);
+            string loc3 = getlocation(quad[i][4]);
+            if(isdigit(loc1[0]))
+            {
+                r2 = getregister();
+                tmp.push_back("MOV");
+                tmp.push_back(r2);
+                tmp.push_back("FP");
+                tcode.push_back(tmp);
+                reg[r2].push_back("FP");
+                vector<string> tmp2;
+                tmp2.push_back("ADI");
+                tmp2.push_back(r2);
+                tmp2.push_back("-"+loc1);
+                tcode.push_back(tmp2);
+                r1 = getregister();
+                vector<string> tmp3;
+                tmp3.push_back("LDR");
+                tmp3.push_back(r1);
+                tmp3.push_back(r2);
+                tcode.push_back(tmp3);
+                reg[r2].clear();
+            }
+            else
+            {
+                r1 = getregister();
+                tmp.push_back("LDR");
+                tmp.push_back(r1);
+                tmp.push_back(loc1);
+                tcode.push_back(tmp);
+            }
             reg[r1].push_back(quad[i][2]);
-            vector<string> tmp2;
-            r2 = getregister();
-            tmp2.push_back("LDR");
-            tmp2.push_back(r2);
-            tmp2.push_back(quad[i][3]);
-            tcode.push_back(tmp2);
+            if(isdigit(loc2[0]))
+            {
+                r3 = getregister();
+                vector<string> tmp4;
+                tmp4.push_back("MOV");
+                tmp4.push_back(r3);
+                tmp4.push_back("FP");
+                tcode.push_back(tmp4);
+                reg[r3].push_back("FP");
+                vector<string> tmp5;
+                tmp5.push_back("ADI");
+                tmp5.push_back(r3);
+                tmp5.push_back("-"+loc2);
+                tcode.push_back(tmp5);
+                r2 = getregister();
+                vector<string> tmp6;
+                tmp6.push_back("LDR");
+                tmp6.push_back(r2);
+                tmp6.push_back(r3);
+                tcode.push_back(tmp6);
+                reg[r3].clear();
+            }
+            else
+            {
+                vector<string> tmp4;
+                r2 = getregister();
+                tmp4.push_back("LDR");
+                tmp4.push_back(r2);
+                tmp4.push_back(quad[i][3]);
+                tcode.push_back(tmp4);
+            }
             reg[r2].push_back(quad[i][3]);
-            vector<string> tmp3;
-			tmp3.push_back("CMP");
-			tmp3.push_back(r1);
-			tmp3.push_back(r2);
-			tcode.push_back(tmp3);
-			vector<string> tmp4;
-			tmp4.push_back("BLT");
-			tmp4.push_back(r1);
-			string lbl1 = "l"+lblgen();
-			string lbl2 = "l"+lblgen();
-			tmp4.push_back(lbl1);
-			tcode.push_back(tmp4);
-			vector<string> tmp5;
-			tmp5.push_back("LDR");
-            tmp5.push_back(r1);
-            tmp5.push_back("zero");
-            tcode.push_back(tmp5);
-			vector<string> tmp9;
-			tmp9.push_back("STR");
-			tmp9.push_back(r1);
-			tmp9.push_back(quad[i][4]);
-			tcode.push_back(tmp9);
-			vector<string> tmp6;
-			tmp6.push_back("JMP");
-			tmp6.push_back(lbl2);
-			tcode.push_back(tmp6);
-			vector<string> tmp7;
-			tmp7.push_back(lbl1);
-			tmp7.push_back("LDR");
+            vector<string> tmp7;
+			tmp7.push_back("CMP");
 			tmp7.push_back(r1);
-			tmp7.push_back("one");
+			tmp7.push_back(r2);
 			tcode.push_back(tmp7);
 			vector<string> tmp8;
-			tmp8.push_back("STR");
+			tmp8.push_back("BLT");
 			tmp8.push_back(r1);
-			tmp8.push_back(quad[i][4]);
+			string lbl1 = "l"+lblgen();
+			string lbl2 = "l"+lblgen();
+			tmp8.push_back(lbl1);
 			tcode.push_back(tmp8);
-			vector<string> tmp10;
-			tmp10.push_back(lbl2);
-			tcode.push_back(tmp10);
+			vector<string> tmp9;
+			tmp9.push_back("LDR");
+            tmp9.push_back(r1);
+            tmp9.push_back("zero");
+            tcode.push_back(tmp9);
+			if(isdigit(loc3[0]))
+            {
+                r3 = getregister();
+                vector<string> tmp10;
+                tmp10.push_back("MOV");
+                tmp10.push_back(r3);
+                tmp10.push_back("FP");
+                tcode.push_back(tmp10);
+                reg[r3].push_back("FP");
+                vector<string> tmp11;
+                tmp11.push_back("ADI");
+                tmp11.push_back(r3);
+                tmp11.push_back("-"+loc3);
+                tcode.push_back(tmp11);
+                vector<string> tmp12;
+                tmp12.push_back("STR");
+                tmp12.push_back(r1);
+                tmp12.push_back(r3);
+                tcode.push_back(tmp12);
+                reg[r3].clear();
+            }
+            else
+            {
+                vector<string> tmp10;
+                tmp10.push_back("STR");
+                tmp10.push_back(r1);
+                tmp10.push_back(loc3);
+                tcode.push_back(tmp10);
+            }
+			reg[r1].push_back(quad[i][4]);
+			vector<string> tmp13;
+			tmp13.push_back("JMP");
+			tmp13.push_back(lbl2);
+			tcode.push_back(tmp13);
+			vector<string> tmp14;
+			tmp14.push_back(lbl1);
+			tmp14.push_back("LDR");
+			tmp14.push_back(r1);
+			tmp14.push_back("one");
+			tcode.push_back(tmp14);
+			if(isdigit(loc3[0]))
+            {
+                r3 = getregister();
+                vector<string> tmp15;
+                tmp15.push_back("MOV");
+                tmp15.push_back(r3);
+                tmp15.push_back("FP");
+                tcode.push_back(tmp15);
+                reg[r3].push_back("FP");
+                vector<string> tmp16;
+                tmp16.push_back("ADI");
+                tmp16.push_back(r3);
+                tmp16.push_back("-"+loc3);
+                tcode.push_back(tmp16);
+                vector<string> tmp17;
+                tmp17.push_back("STR");
+                tmp17.push_back(r1);
+                tmp17.push_back(r3);
+                tcode.push_back(tmp17);
+                reg[r3].clear();
+            }
+            else
+            {
+                vector<string> tmp15;
+                tmp15.push_back("STR");
+                tmp15.push_back(r1);
+                tmp15.push_back(loc3);
+                tcode.push_back(tmp15);
+            }
+			reg[r1].push_back(quad[i][4]);
+			vector<string> tmp18;
+			tmp18.push_back(lbl2);
+			tcode.push_back(tmp18);
 			reg[r1].push_back(quad[i][4]);
 //			reg[stringtoint(r1)].clear();
 			reg[r2].clear();
