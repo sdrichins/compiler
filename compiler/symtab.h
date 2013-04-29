@@ -36,7 +36,7 @@ public:
     }
     void updateSize(string symid, int x)
     {
-        symtable[symid].size += x;
+        symtable[symid].size = x;
     }
 	~symtab(void)
 	{
@@ -351,8 +351,8 @@ public:
 			symbol s = it->second;
 			if(s.symid[0] == 't')
 				v += s.symid + " " + s.typ + " ";
-            if(s.symid[0] == 'P')
-                v += s.symid + " " + s.typ + " ";
+//            if(s.symid[0] == 'P')
+//                v += s.symid + " " + s.typ + " ";
 		}
 		return v;
 	}
